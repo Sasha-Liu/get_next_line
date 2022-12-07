@@ -6,7 +6,7 @@
 /*   By: hsliu <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 15:12:25 by hsliu             #+#    #+#             */
-/*   Updated: 2022/12/07 16:34:02 by hsliu            ###   ########lyon.fr   */
+/*   Updated: 2022/12/07 17:13:48 by hsliu            ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ char	*ft_return_line(char **next)
 		i++;
 	if ((*next)[i] == '\n')
 	{
-		new_next = ft_strcpy((*next)[i + 1]);
+		new_next = ft_strcpy(&((*next)[i + 1]));
 		if (new_next == NULL)
 			return (NULL);
 		(*next)[i + 1] = '\0';

@@ -6,7 +6,7 @@
 /*   By: hsliu <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/07 14:09:16 by hsliu             #+#    #+#             */
-/*   Updated: 2022/12/07 16:34:04 by hsliu            ###   ########lyon.fr   */
+/*   Updated: 2022/12/07 17:12:23 by hsliu            ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,10 +25,10 @@ char	*ft_strchr(const char *s, int c)
 }
 
 //concatenate s1 and s2 and retrun it
-char	*ft_strjoin(char const *s1, char const *s2)
+char	*ft_strjoin(char *s1, char *s2)
 {
-	size_t	len1;
-	size_t	len2;
+	int		len1;
+	int		len2;
 	char	*ptr;
 	int		i;
 
