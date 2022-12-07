@@ -6,7 +6,7 @@
 /*   By: hsliu <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 15:12:25 by hsliu             #+#    #+#             */
-/*   Updated: 2022/12/07 17:13:48 by hsliu            ###   ########lyon.fr   */
+/*   Updated: 2022/12/07 18:24:48 by hsliu            ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,18 +16,20 @@
 //then return NULL
 char	*get_next_line(int fd)
 {
-	static char	*next = "";
-	char		*buffer;
+	static char	*next;
+	char		buffer[BUFFER_SIZE + 1];
 	int			err;
 
-	buffer = (char *)malloc(sizeof(char) * (BUFFER_SIZE + 1));
-	if (buffer == NULL)
-		return (NULL);
+	if (next == NULL)
+	{
+		next = (char *)malloc(sizeof(char));
+		*next = '\0';
+	}
 	err = ft_read(fd, next, buffer);
 	if (err == -1)
-		return (free(buffer), free(next), NULL);
+		return (free(next), NULL);
 	if (err == -2)
-		return (free(buffer), NULL);
+		return ( NULL);
 	return (ft_return_line(&next));
 }
 
@@ -40,13 +42,13 @@ char	*get_next_line(int fd)
 int	ft_read(int fd, char *s, char *buf)
 {
 	char	*s_old;
-	size_t	cnt;
+	int		cnt;
 
 	if (ft_strchr(s, '\n'))
 		return (1);
 	while (1)
 	{
-		cnt = read(fd, buf, BUFFER_SIZE);
+		cnt = (int)read(fd, buf, BUFFER_SIZE);
 		if (cnt == -1)
 			return (-1);
 		if (cnt == 0)

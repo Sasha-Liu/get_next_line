@@ -6,7 +6,7 @@
 /*   By: hsliu <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 15:13:50 by hsliu             #+#    #+#             */
-/*   Updated: 2022/12/07 16:55:49 by hsliu            ###   ########lyon.fr   */
+/*   Updated: 2022/12/07 18:19:57 by hsliu            ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 # include <stdlib.h>
 # include <unistd.h>
-# define BUFFER_SIZE 42
+//# define BUFFER_SIZE 42
 
 char	*get_next_line(int fd);
 int		ft_read(int fd, char *s, char *buf);
