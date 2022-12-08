@@ -6,7 +6,7 @@
 /*   By: hsliu <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 15:12:25 by hsliu             #+#    #+#             */
-/*   Updated: 2022/12/07 18:24:48 by hsliu            ###   ########lyon.fr   */
+/*   Updated: 2022/12/08 13:07:21 by hsliu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 //then return NULL
 char	*get_next_line(int fd)
 {
-	static char	*next;
+	static char	*next = NULL;
 	char		buffer[BUFFER_SIZE + 1];
 	int			err;
 
@@ -25,11 +25,11 @@ char	*get_next_line(int fd)
 		next = (char *)malloc(sizeof(char));
 		*next = '\0';
 	}
-	err = ft_read(fd, next, buffer);
+	err = ft_read(fd, &next, buffer);
 	if (err == -1)
 		return (free(next), NULL);
 	if (err == -2)
-		return ( NULL);
+		return (free(next), NULL);
 	return (ft_return_line(&next));
 }
 
@@ -39,12 +39,12 @@ char	*get_next_line(int fd)
 //return -1 when read error
 //return -2 when malloc error
 //return 0 when there's no more to read
-int	ft_read(int fd, char *s, char *buf)
+int	ft_read(int fd, char **s, char *buf)
 {
 	char	*s_old;
 	int		cnt;
 
-	if (ft_strchr(s, '\n'))
+	if (ft_strchr(*s, '\n'))
 		return (1);
 	while (1)
 	{
@@ -54,10 +54,10 @@ int	ft_read(int fd, char *s, char *buf)
 		if (cnt == 0)
 			return (0);
 		buf[cnt] = '\0';
-		s_old = s;
-		s = ft_strjoin(s, buf);
-		if (s == NULL)
-			return (-1);
+		s_old = *s;
+		*s = ft_strjoin((char const *)*s, (char const *)buf);
+		if (*s == NULL)
+			return (free(s_old), -1);
 		free(s_old);
 		if (ft_strchr(buf, '\n'))
 			return (1);
@@ -78,7 +78,7 @@ char	*ft_return_line(char **next)
 		i++;
 	if ((*next)[i] == '\n')
 	{
-		new_next = ft_strcpy(&((*next)[i + 1]));
+		new_next = ft_strdup((const char *)&((*next)[i + 1]));
 		if (new_next == NULL)
 			return (NULL);
 		(*next)[i + 1] = '\0';
@@ -86,5 +86,7 @@ char	*ft_return_line(char **next)
 		*next = new_next;
 		return (ret);
 	}
+	if (**next == '\0')
+		return (NULL);
 	return (*next);
 }

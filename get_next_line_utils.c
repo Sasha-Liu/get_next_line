@@ -6,7 +6,7 @@
 /*   By: hsliu <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/07 14:09:16 by hsliu             #+#    #+#             */
-/*   Updated: 2022/12/07 18:24:50 by hsliu            ###   ########lyon.fr   */
+/*   Updated: 2022/12/08 12:47:27 by hsliu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,15 +25,15 @@ char	*ft_strchr(const char *s, int c)
 }
 
 //concatenate s1 and s2 and retrun it
-char	*ft_strjoin(char *s1, char *s2)
+char	*ft_strjoin(char const *s1, char const *s2)
 {
-	int		len1;
-	int		len2;
-	char	*ptr;
-	int		i;
+	size_t		len1;
+	size_t		len2;
+	char		*ptr;
+	int			i;
 
-	len1 = ft_strlen(s1);
-	len2 = ft_strlen(s2);
+	len1 = ft_strlen((const char *)s1);
+	len2 = ft_strlen((const char *)s2);
 	ptr = (char *)malloc((len1 + len2 + 1) * sizeof(char));
 	if (ptr == 0)
 		return (ptr);
@@ -52,9 +52,9 @@ char	*ft_strjoin(char *s1, char *s2)
 	return (ptr);
 }
 
-char	*ft_strcpy(char *s)
+char	*ft_strdup(const char *s)
 {
-	int		len;
+	size_t	len;
 	char	*ptr;
 	int		i;
 
@@ -72,9 +72,9 @@ char	*ft_strcpy(char *s)
 	return (ptr);
 }
 
-int	ft_strlen(char *s)
+size_t	ft_strlen(const char *s)
 {
-	int	i;
+	size_t	i;
 
 	i = 0;
 	while (s[i])
