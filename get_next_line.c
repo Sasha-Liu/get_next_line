@@ -6,7 +6,7 @@
 /*   By: hsliu <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 15:12:25 by hsliu             #+#    #+#             */
-/*   Updated: 2022/12/08 13:07:21 by hsliu            ###   ########.fr       */
+/*   Updated: 2022/12/08 16:43:59 by hsliu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,10 +26,12 @@ char	*get_next_line(int fd)
 		*next = '\0';
 	}
 	err = ft_read(fd, &next, buffer);
-	if (err == -1)
-		return (free(next), NULL);
-	if (err == -2)
-		return (free(next), NULL);
+	if (err == -1 || err == -2)
+	{
+		free(next);
+		next = NULL;
+		return (NULL);
+	}
 	return (ft_return_line(&next));
 }
 
@@ -41,7 +43,7 @@ char	*get_next_line(int fd)
 //return 0 when there's no more to read
 int	ft_read(int fd, char **s, char *buf)
 {
-	char	*s_old;
+	char	*s_new;
 	int		cnt;
 
 	if (ft_strchr(*s, '\n'))
@@ -54,11 +56,11 @@ int	ft_read(int fd, char **s, char *buf)
 		if (cnt == 0)
 			return (0);
 		buf[cnt] = '\0';
-		s_old = *s;
-		*s = ft_strjoin((char const *)*s, (char const *)buf);
-		if (*s == NULL)
-			return (free(s_old), -1);
-		free(s_old);
+		s_new = ft_strjoin((char const *)*s, (char const *)buf);
+		free(*s);
+		if (s_new == NULL)
+			return (-1);
+		*s = s_new;
 		if (ft_strchr(buf, '\n'))
 			return (1);
 	}
@@ -73,6 +75,8 @@ char	*ft_return_line(char **next)
 	char	*new_next;
 	char	*ret;
 
+	if (**next == '\0')
+		return (NULL);
 	i = 0;
 	while ((*next)[i] && (*next)[i] != '\n')
 		i++;
@@ -86,7 +90,10 @@ char	*ft_return_line(char **next)
 		*next = new_next;
 		return (ret);
 	}
-	if (**next == '\0')
-		return (NULL);
-	return (*next);
+	else
+	{
+		ret = *next;
+		*next = NULL;
+		return (ret);
+	}
 }
