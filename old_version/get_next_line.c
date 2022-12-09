@@ -6,7 +6,7 @@
 /*   By: hsliu <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 15:12:25 by hsliu             #+#    #+#             */
-/*   Updated: 2022/12/08 16:43:59 by hsliu            ###   ########.fr       */
+/*   Updated: 2022/12/09 10:35:35 by hsliu            ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,25 +14,28 @@
 
 //if there's nothing to read, or an error occur
 //then return NULL
+
 char	*get_next_line(int fd)
 {
 	static char	*next = NULL;
-	char		buffer[BUFFER_SIZE + 1];
+	static int	eof = FALSE;
 	int			err;
 
-	if (next == NULL)
+	if (next == NULL && eof == FALSE)
 	{
 		next = (char *)malloc(sizeof(char));
 		*next = '\0';
 	}
-	err = ft_read(fd, &next, buffer);
+	if (next == NULL && eof == TRUE)
+		return (NULL);
+	err = ft_read(fd, &next, &eof);
 	if (err == -1 || err == -2)
 	{
 		free(next);
 		next = NULL;
 		return (NULL);
 	}
-	return (ft_return_line(&next));
+	return (ft_return_line(&next, &eof));
 }
 
 //it will read and strjoin unti we have a new line in s
@@ -41,26 +44,27 @@ char	*get_next_line(int fd)
 //return -1 when read error
 //return -2 when malloc error
 //return 0 when there's no more to read
-int	ft_read(int fd, char **s, char *buf)
+int	ft_read(int fd, char **next, int *eof)
 {
-	char	*s_new;
-	int		cnt;
+	char	*next_new;
+	int		err;
+	char	buf[BUFFER_SIZE + 1];
 
-	if (ft_strchr(*s, '\n'))
+	if (ft_strchr(*next, '\n'))
 		return (1);
-	while (1)
+	while (TRUE)
 	{
-		cnt = (int)read(fd, buf, BUFFER_SIZE);
-		if (cnt == -1)
+		err = (int)read(fd, buf, BUFFER_SIZE);
+		if (err == -1)
 			return (-1);
-		if (cnt == 0)
-			return (0);
-		buf[cnt] = '\0';
-		s_new = ft_strjoin((char const *)*s, (char const *)buf);
-		free(*s);
-		if (s_new == NULL)
+		if (err < BUFFER_SIZE)
+			*eof = TRUE;
+		buf[err] = '\0';
+		next_new = ft_strjoin((char const *)*next, (char const *)buf);
+		free(*next);
+		*next = next_new;
+		if (*next == NULL)
 			return (-1);
-		*s = s_new;
 		if (ft_strchr(buf, '\n'))
 			return (1);
 	}
@@ -69,14 +73,12 @@ int	ft_read(int fd, char **s, char *buf)
 //it will return the next line in 'next'
 //the next line is end with a newline or a '\0'
 //return NULL when error
-char	*ft_return_line(char **next)
+char	*ft_return_line(char **next, int eof)
 {
 	int		i;
 	char	*new_next;
 	char	*ret;
 
-	if (**next == '\0')
-		return (NULL);
 	i = 0;
 	while ((*next)[i] && (*next)[i] != '\n')
 		i++;
@@ -88,6 +90,11 @@ char	*ft_return_line(char **next)
 		(*next)[i + 1] = '\0';
 		ret = *next;
 		*next = new_next;
+		if (**next == '\0' && eof == TRUE)
+		{
+			free(*next);
+			*next = NULL;
+		}
 		return (ret);
 	}
 	else
