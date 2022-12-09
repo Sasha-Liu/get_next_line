@@ -6,7 +6,7 @@
 /*   By: hsliu <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 10:40:54 by hsliu             #+#    #+#             */
-/*   Updated: 2022/12/09 14:57:45 by hsliu            ###   ########lyon.fr   */
+/*   Updated: 2022/12/09 15:54:44 by hsliu            ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 # include <stdlib.h>
 # include <unistd.h>
-//# define BUFFER_SIZE 42
+# define BUFFER_SIZE 42
 # define TRUE 1
 # define FALSE 0
 

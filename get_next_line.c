@@ -6,7 +6,7 @@
 /*   By: hsliu <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 10:38:38 by hsliu             #+#    #+#             */
-/*   Updated: 2022/12/09 14:58:38 by hsliu            ###   ########lyon.fr   */
+/*   Updated: 2022/12/09 16:24:07 by hsliu            ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,10 @@ char	*get_next_line(int fd)
 	if (err == 0)
 		eof = TRUE;
 	line = ft_give_line(str);
+	/* if (line == NULL)
+	 *		return (NULL);
+	 * Should add this line, but it doesn't work well with paco
+	 */
 	if (*line == '\0')
 	{
 		free(line);
