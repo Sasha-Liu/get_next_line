@@ -6,7 +6,7 @@
 /*   By: hsliu <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 10:38:38 by hsliu             #+#    #+#             */
-/*   Updated: 2022/12/09 13:26:34 by hsliu            ###   ########lyon.fr   */
+/*   Updated: 2022/12/09 14:50:04 by hsliu            ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,28 +15,23 @@
 char	*get_next_line(int fd)
 {
 	static char	*str = NULL;
-	static int	eof = FALSE;
+	int			eof;
 	int			err;
 	char		*line;
 
-	err = 0;
-	if (str == NULL && eof == FALSE)
-	{
-		str = (char *)malloc(sizeof(char));
-		if (str == NULL)
-			return (NULL);
-		*str = '\0';
-	}
-	if (str == NULL && eof == TRUE)
-		return (NULL);
-	err = ft_read(fd, &str, &eof);
+	if (ft_init(&str, &eof) == FALSE)
+		return (NULL);	
+	err = ft_read(fd, &str);
 	if (err == -1)
 	{
 		free(str);
 		str = NULL;
-		eof = TRUE;
 		return (NULL);
 	}
+	if (err == 0)
+		eof = TRUE;
+	else
+		eof = FALSE;
 	line = ft_give_line(str);
 	if (*line == '\0')
 	{
@@ -47,10 +42,24 @@ char	*get_next_line(int fd)
 	return (line);
 }
 
-//return -1 when error
-//return 1 otherwise
-//set eof when reaching end of file
-int	ft_read(int fd, char **str, int *eof)
+int	ft_init(char **str, int *eof)
+{	
+	if (*str == NULL)
+	{
+		*str = (char *)malloc(sizeof(char));
+		if (*str == NULL)
+			return (FALSE);
+		**str = '\0';
+		*eof = FALSE;
+	}
+	return (TRUE);
+}
+
+//return count
+//count = -1 when error
+//count = 0 when reaching end of file
+//otherwise count is positive
+int	ft_read(int fd, char **str)
 {
 	char	*new_str;
 	char	buffer[BUFFER_SIZE + 1];
@@ -63,16 +72,16 @@ int	ft_read(int fd, char **str, int *eof)
 		count = read(fd, buffer, BUFFER_SIZE);
 		if (count == -1)
 			return (-1);
-		if (count < BUFFER_SIZE)
-			*eof = TRUE;
 		buffer[count] = '\0';
+		if (count < BUFFER_SIZE)
+			count = 0;
 		new_str = ft_strjoin(*str, buffer);
 		free(*str);
 		*str = new_str;
+		if (count == 0)
+			return (0);
 		if (ft_strchr(buffer, '\n'))
-			return (1);
-		if (*eof == TRUE)
-			return (1);
+			return (count);
 	}
 }
 
