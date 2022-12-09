@@ -6,7 +6,7 @@
 /*   By: hsliu <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 10:38:38 by hsliu             #+#    #+#             */
-/*   Updated: 2022/12/09 14:55:54 by hsliu            ###   ########lyon.fr   */
+/*   Updated: 2022/12/09 14:58:38 by hsliu            ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ char	*get_next_line(int fd)
 	char		*line;
 
 	if (ft_init(&str, &eof) == FALSE)
-		return (NULL);	
+		return (NULL);
 	err = ft_read(fd, &str);
 	if (err == -1)
 	{
@@ -97,7 +97,7 @@ void	ft_trim(char **str, int eof)
 		i++;
 	if ((*str)[i] == '\0')
 	{
-		free(*str);			
+		free(*str);
 		*str = NULL;
 		return ;
 	}
