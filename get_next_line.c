@@ -22,12 +22,8 @@ char	*get_next_line(int fd)
 	if (ft_init(&str, &eof) == FALSE)
 		return (NULL);
 	err = ft_read(fd, &str);
-	if (err == -1)
-	{
-		free(str);
-		str = NULL;
-		return (NULL);
-	}
+	if (err == -1 || str == NULL)
+		return (free(str), str = NULL, NULL);
 	if (err == 0)
 		eof = TRUE;
 	line = ft_give_line(str);
