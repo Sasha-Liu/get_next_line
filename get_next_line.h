@@ -6,7 +6,7 @@
 /*   By: hsliu <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 10:40:54 by hsliu             #+#    #+#             */
-/*   Updated: 2022/12/09 14:48:35 by hsliu            ###   ########lyon.fr   */
+/*   Updated: 2022/12/09 14:52:40 by hsliu            ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 //# define BUFFER_SIZE 42
 # define TRUE 1
 # define FALSE 0
+
 char	*get_next_line(int fd);
 void	ft_trim(char **str, int eof);
 char	*ft_give_line(char *str);

@@ -6,7 +6,7 @@
 /*   By: hsliu <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 10:38:38 by hsliu             #+#    #+#             */
-/*   Updated: 2022/12/09 14:50:04 by hsliu            ###   ########lyon.fr   */
+/*   Updated: 2022/12/09 14:55:54 by hsliu            ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,6 @@ char	*get_next_line(int fd)
 	}
 	if (err == 0)
 		eof = TRUE;
-	else
-		eof = FALSE;
 	line = ft_give_line(str);
 	if (*line == '\0')
 	{
