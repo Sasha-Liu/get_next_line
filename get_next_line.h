@@ -6,14 +6,15 @@
 /*   By: hsliu <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 10:40:54 by hsliu             #+#    #+#             */
-/*   Updated: 2022/12/09 11:31:43 by hsliu            ###   ########lyon.fr   */
+/*   Updated: 2022/12/09 12:29:38 by hsliu            ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef GET_NEXT_LINE_H
 # define GET_NEXT_LINE_H
 
-#include <stdlib.h>
+# include <stdlib.h>
+# include <unistd.h>
 //# define BUFFER_SIZE 42
 # define TRUE 1
 # define FALSE 0
@@ -25,7 +26,6 @@ char	*ft_strjoin(char const *s1, char const *s2);
 char	*ft_strndup(const char *s, size_t n);
 size_t	ft_strlen(const char *s);
 void	*ft_memmove(void *dest, const void *src, size_t n);
-
-
+int		ft_read(int fd, char **str, int *eof);
 
 #endif

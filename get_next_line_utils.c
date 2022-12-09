@@ -6,7 +6,7 @@
 /*   By: hsliu <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/07 14:09:16 by hsliu             #+#    #+#             */
-/*   Updated: 2022/12/09 11:24:10 by hsliu            ###   ########lyon.fr   */
+/*   Updated: 2022/12/09 13:26:37 by hsliu            ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ char	*ft_strndup(const char *s, size_t n)
 {
 	size_t	len;
 	char	*ptr;
-	int		i;
+	size_t	i;
 
 	i = 0;
 	len = ft_strlen(s);
